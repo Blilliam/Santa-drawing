@@ -1,5 +1,3 @@
-package com.william.drawing;
-
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
@@ -27,7 +25,7 @@ public class TriangleTree {
 
 		// three stacked triangles
 		int third = size / 5;
-		int[] xPts = { x - w / 2, x, x + w / 2 };
+		int[] xPts = {x - w/2, x, x + w/2 };
 		
 		for (int i = 0; i < 5; i++) {
 			int topY = (y - (i + 1) * third) + (i * third)/3;

@@ -1,5 +1,3 @@
-package com.william.drawing;
-
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
@@ -34,7 +32,7 @@ public class Cabin {
         g2.setColor(new Color(140, 85, 40));
         g2.fillPolygon(rightWall);
 
-        // ---------- ROOF FRONT ----------
+        // ---------- FRONT ROOF ----------
         int roofPeakX = x + w / 2;
         int roofPeakY = y - h / 2;
 
@@ -46,7 +44,7 @@ public class Cabin {
         g2.setColor(new Color(125, 65, 30));
         g2.fillPolygon(roofFront);
 
-        // ---------- ROOF RIGHT ----------
+        // ---------- RIGHT ROOF
         Polygon roofRight = new Polygon();
         roofRight.addPoint(x + w + 10, y);                // front right
         roofRight.addPoint(x + w + 10 + d, y - d);       // back right
@@ -56,17 +54,42 @@ public class Cabin {
         g2.setColor(new Color(100, 50, 25));
         g2.fillPolygon(roofRight);
 
-        // ---------- ROOF LEFT ----------
+        // ---------- LEFT ROOF
         Polygon roofLeft = new Polygon();
-        roofLeft.addPoint(x - 10, y);              // front left eave
-        roofLeft.addPoint(x - 10 - d, y - d);      // back left offset
-        roofLeft.addPoint(roofPeakX - d, roofPeakY - d); // back peak offset
+        roofLeft.addPoint(x - 10, y);              // front left 
+        roofLeft.addPoint(x - 10 + d, y - d);      // back left offset
+        roofLeft.addPoint(roofPeakX + d, roofPeakY - d); // back peak offset
         roofLeft.addPoint(roofPeakX, roofPeakY);   // front peak
 
         g2.setColor(new Color(150, 80, 40));       // slightly brighter
         g2.fillPolygon(roofLeft);
 
-        // ---------- DOOR ----------
+        // ---------CHIMNEY
+        //front
+        Polygon chimneyFront = new Polygon();
+        chimneyFront.addPoint(x + d, roofPeakY + d/2);              // front left 
+        chimneyFront.addPoint(x + d, y - d - 50);      // back left offset
+        chimneyFront.addPoint(roofPeakX, roofPeakY - d/2 - 50); // back right peak 
+        chimneyFront.addPoint(roofPeakX, roofPeakY);   // front 
+        
+      //g2.setColor(new Color(140, 85, 40));     // slightly darker
+        g2.setColor(Color.BLACK);
+        g2.fillPolygon(chimneyFront);
+        
+        
+        //right
+        Polygon chimneyRight = new Polygon();
+        chimneyRight.addPoint(x + w + 10, y);                // front right
+        chimneyRight.addPoint(x + w + 10 + d, y - d);       // back right
+        chimneyRight.addPoint(roofPeakX, roofPeakY - d/2 - 50); // back peak offset
+        chimneyRight.addPoint(roofPeakX, roofPeakY);   // front peak
+
+        //g2.setColor(new Color(140, 85, 40));     // slightly darker
+        g2.setColor(Color.GRAY);
+        g2.fillPolygon(chimneyRight);
+        
+       
+        // ---------- DOOR
         int doorW = w / 5;
         int doorH = h / 2;
         int doorX = x + w / 2 - doorW / 2;
@@ -75,8 +98,8 @@ public class Cabin {
         g2.setColor(new Color(90, 50, 25));
         g2.fillRect(doorX, doorY, doorW, doorH);
 
-        // ---------- WINDOWS ----------
-        g2.setColor(Color.CYAN);
+        // ---------- WINDOWS 
+        g2.setColor(Color.YELLOW);
         int win = w / 6;
 
         // front left window
@@ -88,13 +111,7 @@ public class Cabin {
         int wx2 = x + w - w / 6 - win;
         g2.fillRect(wx2, wy1, win, win);
 
-        // small right-wall window (perspective)
-        int rwx = x + w + d / 4;
-        int rwy = y + h / 4 - d / 4;
-        int rww = Math.max(6, win - d / 6);
-        g2.fillRect(rwx, rwy, rww, rww);
-
-        // ---------- OUTLINES ----------
+        // ---------- OUTLINES
         g2.setColor(Color.BLACK);
 
         // front wall outline
@@ -113,9 +130,9 @@ public class Cabin {
         g2.drawLine(x + w + 10 + d, y - d, roofPeakX + d, roofPeakY - d); // right
         g2.drawLine(roofPeakX + d, roofPeakY - d, roofPeakX, roofPeakY); // right peak
 
-        g2.drawLine(x - 10, y, x - 10 - d, y - d);              // left eave
-        g2.drawLine(x - 10 - d, y - d, roofPeakX - d, roofPeakY - d); // left back
-        g2.drawLine(roofPeakX - d, roofPeakY - d, roofPeakX, roofPeakY); // left peak
+        g2.drawLine(x - 10, y, x - 10 + d, y - d);              // left eave
+        g2.drawLine(x - 10 + d, y - d, roofPeakX + d, roofPeakY - d); // left back
+        g2.drawLine(roofPeakX + d, roofPeakY - d, roofPeakX, roofPeakY); // left peak
 
         // door outline
         g2.drawRect(doorX, doorY, doorW, doorH);
@@ -123,6 +140,5 @@ public class Cabin {
         // window outlines
         g2.drawRect(wx1, wy1, win, win);
         g2.drawRect(wx2, wy1, win, win);
-        g2.drawRect(rwx, rwy, rww, rww);
     }
 }

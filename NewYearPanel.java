@@ -1,5 +1,3 @@
-package com.william.drawing;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -38,11 +36,11 @@ public class NewYearPanel extends JPanel {
 	
 	//cabin
 	double hutSize = 1.5;
-	Cabin hut = new Cabin((int)(200 * hutSize), (int)(250 * hutSize), (int)(180 * hutSize), (int)(120 * hutSize), (int)(50 * hutSize));
+	Cabin hut = new Cabin(WIDTH/2, HEIGHT - 220, (int)(180 * hutSize), (int)(120 * hutSize), (int)(50 * hutSize));
 
 	public NewYearPanel() {
-		Color c = new Color(150, 158, 255);
-		this.setBackground(c);
+		//Color c = new Color(150, 158, 255);
+		this.setBackground(Color.BLUE);
 		this.setPreferredSize(d);
 
 		flakes = new Point[500];
@@ -64,18 +62,21 @@ public class NewYearPanel extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g.create();
 		
-		g2.fill(new Rectangle2D.Double(0, 100, 100, 100));
+		g2.setColor(Color.WHITE);
+		g2.fillRect(0, HEIGHT - 130, WIDTH, 130);
 
 		// Draw Santa 
 		Santa.drawSanta(g2, new Point((int) santaX, santaY), 2.0);
 		
-		//draw hut
-		hut.draw(g2);
+		
 
 		// draw tree
 		for (TriangleTree tree:trees) {
 			tree.draw(g2);
 		}
+		
+		//draw hut
+		hut.draw(g2);
 		
 		// Draw snowflakes
 		g2.setColor(Color.white);
