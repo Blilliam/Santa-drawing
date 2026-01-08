@@ -1,3 +1,5 @@
+package com.william.drawing;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -30,7 +32,7 @@ public class Santa {
         //SLEIg2H
         g2.translate(70, 10);
 
-        // sleig2h body
+        // sleigh body
         g2.fillRect(0, -15, 40, 15);
 
         // seat

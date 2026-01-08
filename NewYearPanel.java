@@ -1,14 +1,16 @@
+package com.william.drawing;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.geom.Rectangle2D;
 
 import javax.swing.JPanel;
 
 public class NewYearPanel extends JPanel {
+	//used chatGPT to figure out how to get screen size
 	static Toolkit tk = Toolkit.getDefaultToolkit();
 
 	public static final int WIDTH = ((int) tk.getScreenSize().getWidth());
@@ -27,6 +29,14 @@ public class NewYearPanel extends JPanel {
 	private int santaYLowerLimit = 70;
 	
 	private double santaSpeed = 15.0;
+	//present
+	// Present state
+	private boolean presentDropped = false;
+	private double presentX, presentY;
+	private double presentSpeed = 7.0; // falling speed
+
+	
+	Present p = new Present(10000, 400, 50, Color.RED, Color.GREEN);
 
 	// trees
 	int tSize;
@@ -40,9 +50,9 @@ public class NewYearPanel extends JPanel {
 
 	public NewYearPanel() {
 		//Color c = new Color(150, 158, 255);
-		this.setBackground(Color.BLUE);
+		this.setBackground(new Color(15, 15, 60));
 		this.setPreferredSize(d);
-
+		
 		flakes = new Point[500];
 		for (int i = 0; i < flakes.length; i++) {
 			int flakeX = (int) (Math.random() * WIDTH);
@@ -52,7 +62,7 @@ public class NewYearPanel extends JPanel {
 		
 		for (int i = 0; i < numOfTrees; i++) {
 			tSize = (int)(Math.random() * 200) + 200;
-			tPoint = new Point(i * 200, HEIGHT - 100);
+			tPoint = new Point(i * ((int)(Math.random() * 100) + 150), HEIGHT - 150);
 			trees[i] = new TriangleTree(tPoint, tSize);
 		}
 	}
@@ -68,7 +78,10 @@ public class NewYearPanel extends JPanel {
 		// Draw Santa 
 		Santa.drawSanta(g2, new Point((int) santaX, santaY), 2.0);
 		
-		
+		//draw present
+		if (presentDropped) {
+		    p.draw(g2, (int)presentX, (int)presentY);
+		}
 
 		// draw tree
 		for (TriangleTree tree:trees) {
@@ -102,15 +115,34 @@ public class NewYearPanel extends JPanel {
 	}
 
 	public void moveSanta() {
-		santaX += santaSpeed;
-		if (santaX > WIDTH) { // 400 = approximate Santa width
-			santaX = -400;
-		}
-		
-		santaY += santaDy;
-		if (santaY >= santaYUpperLimit || santaY <= santaYLowerLimit) {
-			santaDy = (-santaDy);
-		}
-		
+	    santaX += santaSpeed;
+	    if (santaX > WIDTH) {
+	        santaX = -400; // reset Santa
+	        presentDropped = false; // ready for next drop
+	    }
+
+	    santaY += santaDy;
+	    if (santaY >= santaYUpperLimit || santaY <= santaYLowerLimit) {
+	        santaDy = -santaDy;
+	    }
+
+	    // Trigger present drop when Santa is above cabin
+	    if (!presentDropped && santaX + 100 >= hut.x && santaX <= hut.x + hut.w) {
+	        presentDropped = true;
+	        presentX = santaX + 220;       // at santa's x (below the cart)
+	        presentY = santaY + 50;       // slightly below him
+	    }
+	}
+	
+	public void dropPresent() {
+	    if (presentDropped) {
+	        presentY += presentSpeed;
+
+	        // Stop at the ground (same as snow height)
+	        if (presentY >= HEIGHT - 50 - p.size) { 
+	            presentY = HEIGHT - 50 - p.size;
+	            presentDropped = false; // can reset for next drop if desired
+	        }
+	    }
 	}
 }

@@ -1,3 +1,5 @@
+package com.william.drawing;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -31,7 +33,8 @@ public class HappyDriver {
         while (true) {
             field.dropFlakes();
             int speed = slider.getValue();
-            field.moveSanta();   // move Santa each frame
+            field.moveSanta();
+            field.dropPresent();
             field.repaint();
             Thread.sleep(speed);
         }

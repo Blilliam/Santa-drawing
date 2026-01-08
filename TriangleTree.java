@@ -1,3 +1,5 @@
+package com.william.drawing;
+
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
@@ -34,7 +36,7 @@ public class TriangleTree {
 			g.fillPolygon(xPts, yPts, 3);
 		}
 
-		// thin trunk
+		// trunk
 		g.setColor(treeTrunk);
 		int trunkW = w / 8;
 		g.fillRect(x - trunkW / 2, y, trunkW, size / 5);
