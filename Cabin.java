@@ -1,5 +1,3 @@
-package com.william.drawing;
-
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
@@ -92,7 +90,7 @@ public class Cabin {
 		int wx2 = x + w - w / 6 - win;
 		g2.fillRect(wx2, wy1, win, win);
 
-		//		 OUTLINES
+		// OUTLINES
 		g2.setColor(Color.BLACK);
 
 		// front wall outline
